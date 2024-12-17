@@ -1197,13 +1197,19 @@ function closeapp() {
 
 //API関連
 const imageBlobs = []; // 撮影した画像データを保存する配列
+let fieldName; // フォームデータのフィールド名を変数に格納
 
 // 実行ボタン＝scr11に行くときのボタン
 // APIにリクエストする関数を定義
 function sendImageDataToAPI() {
+  if (templateName === "シャツ・ブラウス") { 
+    fieldName = 'longshirt[]'; 
+  } else {
+    fieldName = 'bigTshirt[]';
+  }
   const formData = new FormData();
   imageBlobs.forEach((blob, index) => {
-    formData.append(`longshirt[]`, blob, `image${index}.png`);
+    formData.append(fieldName, blob, `image${index}.png`);
   });
 
   fetch("https://model-swan-main.ngrok-free.app/process_images", {
